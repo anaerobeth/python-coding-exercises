@@ -20,6 +20,15 @@ class TextPorter():
 
         return self.word_dictionary
 
-t = TextPorter()
-t.encode()
 
+    def decode(self):
+        key = raw_input('Enter the integer for decoding: ')
+
+        try:
+            return self.word_dictionary[int(key)]
+        except:
+            return 'That integer is not in the dictionary'
+
+t = TextPorter()
+print(t.encode())
+print(t.decode())

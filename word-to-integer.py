@@ -10,7 +10,7 @@ class TextLocker():
         self.secret_codes = {}
         self.secret_messages = {}
         self.message_key = ''
-        self.secret = self.register_secret_code()
+        self.secret = ''
 
 
     def unique_id(self):
@@ -27,7 +27,8 @@ class TextLocker():
 
 
     def encode(self):
-        inputs = raw_input('Enter a series of words: ').split(" ")
+        self.secret = self.register_secret_code()
+        inputs = raw_input('Enter the message you want to lock: ').split(" ")
 
         for i in filter(None, inputs):
             word_id = self.unique_id()
@@ -40,10 +41,10 @@ class TextLocker():
         print('Use this code to retrieve the original message: {}'.format(self.secret_codes[self.secret]))
 
 
-    def decode(self):
+    def decode_message(self):
         message = []
         secret_key = raw_input('Enter your secret key: ')
-        message_key = raw_input('Enter an integer for decoding: ')
+        message_key = raw_input('Enter the key for the message that you want to unlock: ')
 
         try:
             if self.secret_codes[secret_key] == int(message_key):
@@ -51,18 +52,18 @@ class TextLocker():
                 for word in words:
                     message.append(self.word_dictionary[word])
 
-            return " ".join(message)
+            print 'Your decoded message is "{}"'.format(" ".join(message))
 
         except:
             print('There is no message for that secret and integer combination')
 
 
-    def decode_message(self):
-        result = self.decode()
 
-        print 'Your decoded message is "{}"'.format(result)
-
-
+option = raw_input("Enter your selection: 1: lock a message, 2: retrieve a locked message: ")
 t = TextLocker()
-t.encode()
-t.decode_message()
+if option == '1':
+    t.encode()
+else if option == '2':
+    t.decode_message()
+else:
+    print('Goodbye')

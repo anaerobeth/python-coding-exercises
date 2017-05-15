@@ -19,11 +19,24 @@ class BaseConverter():
         return "".join(codes)
 
 
-    def encode(self):
-        code = self.get_input('Enter word to encode: ').lower()
+    def run(self):
+        message = []
+        phrase = self.get_input('Enter phrase to encode: ').lower().split(" ")
 
+        for word in phrase:
+            if len(word) > 10:
+                print("'{}' exceeds character limit and has been removed".format(word))
+            else:
+                message.append(word)
+
+        for item in message:
+            print(self.encode(item))
+
+        print(self.decode())
+
+    def encode(self, item):
         result = 0
-        for index, char in enumerate(self.alphabet_codes(code)[::-1]):
+        for index, char in enumerate(self.alphabet_codes(item)[::-1]):
             result += int(char)* 26**index
 
         return result
@@ -46,5 +59,4 @@ class BaseConverter():
 
 
 n = BaseConverter()
-print(n.encode())
-print(n.decode())
+n.run()

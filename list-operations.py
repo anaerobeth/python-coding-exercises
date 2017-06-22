@@ -5,7 +5,9 @@ item_to_search = 50
 item_to_insert = 15
 insertion_position = 2
 item_to_delete = 40
-item to merge = 60
+item_to_merge = 60
+item_index_to_update = 4
+item_replacement = 99
 """
 
 class MyList(object):
@@ -34,6 +36,10 @@ class MyList(object):
     def _merge(self, item):
         return self.items + [item]
 
+    def _update(self, new_item, position):
+        return self.items[:position-1] + [new_item] + self.items[position:]
+
+
 l = MyList(10, 20, 30, 40, 50)
 assert(l._traverse()) == [10, 20, 30, 40, 50]
 assert(l._search(20)) == "Found"
@@ -42,3 +48,4 @@ assert(l._insert(15, 2)) == [10, 15, 20, 30, 40, 50]
 assert(l._delete(40)) == [10, 20, 30, 50]
 assert(l._delete(99)) == [10, 20, 30, 40, 50]
 assert(l._merge(60)) == [10, 20, 30, 40, 50, 60]
+assert(l._update(99, 5)) == [10, 20, 30, 40, 99]

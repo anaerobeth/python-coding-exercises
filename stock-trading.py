@@ -10,14 +10,19 @@ def get_max_profit(stock_prices):
     if not stock_prices:
         pass
     else:
-        # loop through prices to buy at
-        for index, k in enumerate(stock_prices):
-            # loop through prices to sell at
-            for j in stock_prices[index+1:]:
-                if j - k > max_profit:
-                    # update profit if we can do better
-                    max_profit = j - k
-                    buy, sell = k, j
+        min_price = stock_prices[0]
+
+        # loop through prices
+        for current_price in stock_prices:
+
+            # is this the lowest price seen?
+            min_price = min(min_price, current_price)
+            profit = current_price - min_price
+
+            # update profit if we can do better
+            if profit > max_profit:
+                max_profit = profit
+                buy, sell = min_price, current_price
 
     if buy == sell:
         return 'No trade is possible today'

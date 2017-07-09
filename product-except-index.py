@@ -54,7 +54,33 @@ def get_products_using_division(integers):
     return products
 
 
+def get_products_using_greedy_approach(integers):
+    products_of_all_ints_except_at_index = [None] * len(integers)
+
+    # find the product of all integers before the index
+    product_so_far = 1
+    i = 0
+    while i < len(integers):
+        products_of_all_ints_except_at_index[i] = product_so_far
+        product_so_far *= integers[i]
+        i += 1
+
+    # find the product of all integers after the index
+    # by walking backwards until index
+    product_so_far = 1
+    i = len(integers) - 1
+    while i >= 0:
+        # multiply it with the products list from step above
+        products_of_all_ints_except_at_index[i] *= product_so_far
+        product_so_far *= integers[i]
+        i -= 1
+
+    return products_of_all_ints_except_at_index
+
+
+
 assert(delete_integer([1, 2, 3], 1)) == [2, 3]
 assert(product([1, 3])) == 3
 assert(get_products_of_all_ints_except_at_index([1, 2, 3])) == [ (2*3), (1*3), (1*2) ]
 assert(get_products_using_division([1, 2, 3])) == [ (2*3), (1*3), (1*2) ]
+assert(get_products_using_greedy_approach([1, 2, 3, 4])) == [ (2*3*4), (1*3*4), (1*2*4), (1*2*3)]

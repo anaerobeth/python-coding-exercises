@@ -54,16 +54,21 @@ def get_products_using_division(integers):
     return products
 
 
-def get_products_using_greedy_approach(integers):
-    products_of_all_ints_except_at_index = [None] * len(integers)
+def products_before_index(integers):
+    products = [None] * len(integers)
 
     # find the product of all integers before the index
     product_so_far = 1
     i = 0
     while i < len(integers):
-        products_of_all_ints_except_at_index[i] = product_so_far
+        products[i] = product_so_far
         product_so_far *= integers[i]
         i += 1
+
+    return products
+
+def get_products_using_greedy_approach(integers):
+    products_of_all_ints_except_at_index = products_before_index(integers)
 
     # find the product of all integers after the index
     # by walking backwards until index

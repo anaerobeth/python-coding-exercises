@@ -42,6 +42,19 @@ def get_products_of_all_ints_except_at_index(integers):
     return products
 
 
+def get_products_using_division(integers):
+    products = []
+    # python 2 lambda
+    original_product = reduce(lambda x, y: x * y, integers, 1)
+    for num in integers:
+        if num != 0:
+            products.append(original_product / num)
+        else:
+            products.append(0)
+    return products
+
+
 assert(delete_integer([1, 2, 3], 1)) == [2, 3]
 assert(product([1, 3])) == 3
 assert(get_products_of_all_ints_except_at_index([1, 2, 3])) == [ (2*3), (1*3), (1*2) ]
+assert(get_products_using_division([1, 2, 3])) == [ (2*3), (1*3), (1*2) ]

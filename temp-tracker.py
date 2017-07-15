@@ -2,6 +2,7 @@
 TempTracker
 Temperature in Fahrenheit, range 0..110
 """
+from collections import Counter
 
 class TempTracker():
     values = []
@@ -33,8 +34,12 @@ class TempTracker():
             else:
                 values_dict[value] += 1
 
+        # if values are numeric:
+        # return Counter(values_dict).most_common()[0][0]
+
         sorted_values = sorted(values_dict.items(), key=lambda x: x[1])
         return sorted_values[-1][0]
+
 
 t = TempTracker(12, 14, 20)
 print(t.values)

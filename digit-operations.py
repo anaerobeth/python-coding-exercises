@@ -6,10 +6,21 @@ import sys
 
 def sum_of_digits(number):
     total = 0
-    for num in str(number):
-        total += int(num)
+
+    # For loop
+    # for num in str(number):
+    #     total += int(num)
+
+    # Using map
+    # for num in map(int, str(number)):
+    #     total += num
+
+    # Using list comprehension
+    for num in [int(i) for i in str(number)]:
+        total += num
 
     return total
+
 
 
 def product_of_digits(number):

@@ -47,5 +47,24 @@ def blastoff(count):
     blastoff(count-1)
 
 
+def factorial(number):
+    """
+    5! is 5 * 4 * 3 * 2 * 1
+    """
+    # For loop
+    # product = 1
+    # for i in range(1, number+1):
+    #     product *= i
+
+    # return product
+
+    # Recursive
+    if number < 1:
+        return 1
+    else:
+        return number * factorial(number - 1)
+
+
 liftoff(5)
 blastoff(5)
+print(factorial(5))

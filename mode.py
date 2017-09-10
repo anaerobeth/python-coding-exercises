@@ -4,6 +4,11 @@ Given a set of n items, determine the mode (element that occurs the most number 
 from mergesort import sorter
 
 def mode(given):
+    """ Find the mode
+
+    >>> print(mode([5, 9, 1, 3, 4, 4, 8]))
+    4
+    """
     arr = sorter(given)
     mode = arr[0]
     longest_run = 0
@@ -22,8 +27,5 @@ def mode(given):
                 run = 0
     return mode
 
-
-given = [5, 9, 1, 3, 4, 4, 8]
-print(mode(given))
-
-
+import doctest
+doctest.testmod()

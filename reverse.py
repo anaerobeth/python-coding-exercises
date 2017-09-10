@@ -33,3 +33,6 @@ g = Reverse('golf')
 for char in g.reverse():
     print(char)
 
+# Using generator expressions
+s = 'star'
+print(list(s[i] for i in range(len(s)-1, -1, -1)))

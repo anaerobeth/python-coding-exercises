@@ -22,19 +22,15 @@ class BaseBinaryTree:
         return node
 
 class BinaryTree(BaseBinaryTree):
-    def is_parent(self, node):
-        return bool(node.left or node.right)
-
-    def is_interior(self, node):
-        return (not node == self.root) and self.is_parent(node)
-
-    def is_leaf(self, node):
-        return (not node == self.root) and (not self.is_interior(node))
+    def traverse(self, node):
+        if not node:
+            return None
+        print(node.value)
+        self.traverse(node.left)
+        self.traverse(node.right)
 
 level_order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 tree = BinaryTree(level_order)
+tree.traverse(tree.root) # 1 2 4 8 9 5 10 3 6 7
 
-print(tree.is_parent(tree.root))
-print(tree.is_interior(tree.root.left))
-print(tree.is_leaf(tree.root.left.left.left))

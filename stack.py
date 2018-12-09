@@ -1,28 +1,38 @@
+"""Implement Stack
+
+>>> Stack([1, 2, 5]).isEmpty()
+False
+>>> Stack([1, 2, 5]).push(6)
+[1, 2, 5, 6]
+>>> Stack([1, 2, 5]).pop()
+5
+>>> Stack([1, 2, 5]).peek()
+5
+>>> Stack([1, 2, 5]).size()
+3
+"""
+
 class Stack():
-    def __init__(self):
-        self.items = []
+    def __init__(self, l=None):
+        self._container = [] if l == None else l
 
     def isEmpty(self):
-        return len(self.items) == 0
+        return len(self._container) == 0
 
     def push(self, item):
-        self.items.append(item)
+        self._container.append(item)
+        return self._container
 
     def pop(self):
-        return self.items.pop()
+        return self._container.pop()
 
     def peek(self):
-        return self.items[:-1]
+        return self._container[-1]
 
     def size(self):
-        return len(self.items)
+        return len(self._container)
 
-s = Stack()
-s.push(1)
-s.push(2)
-print(s.size())
-s.peek()
-print(s.size())
-s.pop()
-print(s.size())
 
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()

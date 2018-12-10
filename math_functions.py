@@ -83,15 +83,40 @@ def fibo_cache(n):
 
 def fibo_generator(n):
 
-    """Use a generator
-    Track values for minus_one, minus_two, append sum to list until n elements, return last
+    """Create a fibo sequence using a generator
+
+    f(n) := { yield 0 if n == 0; yield 1 if n > 0;
+        else m1, m2 = 1, 0; m1, m2 = m1 + m2, m1; yield m1 for range(n-2) }
+
+    >>> for i in fibo_generator(5): print(i)
+    0
+    1
+    1
+    2
+    3
+    """
+
+    yield 0
+    if n > 0: yield 1
+    minus_two = 0
+    minus_one = 1
+
+    for _ in range(n-2):
+        minus_one, minus_two = minus_two + minus_one, minus_one
+        yield minus_one
+
+
+def fibo_sequence(n):
+
+    """Create a fibo sequence using list comprehension
+    Track values for minus_one, minus_two, append sum to list until n elements
 
     f(n) := { m1, m2 = 0, 0;
         [ cur = 0 if num == 0; cur = 1 if num == 1;
-          cur = 1 if num == 2; else cur = m1 + m2; m1, m2 = cur, m1 for range(n) ][-1] }
+          cur = 1 if num == 2; else cur = m1 + m2; m1, m2 = cur, m1 for range(n) ] }
 
-    >>> fibo_generator(7)
-    8
+    >>> fibo_sequence(7)
+    [0, 1, 1, 2, 3, 5, 8]
     """
 
     minus_two = 0
@@ -107,7 +132,8 @@ def fibo_generator(n):
         seq.append(current)
         minus_one, minus_two = current, minus_one
 
-    return seq[-1]
+    return seq
+
 
 
 if __name__ == "__main__":

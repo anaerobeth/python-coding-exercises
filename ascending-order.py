@@ -1,27 +1,23 @@
 """
 Check if an integer is in a sorted list of integers
+
+>>> l = SortedList(2, 5, 8, 1)
+>>> l.included(2)
+True
+>>> l.included(0)
+False
 """
 
 class SortedList():
     def __init__(self, *args):
-        self.items = []
-        for arg in args:
-            self.items.append(arg)
-        self.items = sorted(self.items)
-        print(self.items)
+        self.items = sorted([item for item in args])
 
     def included(self, integer):
-        found = False
         for item in self.items:
             if item == integer:
-                found = True
-        return found
+                return True
+        return False
 
-l = SortedList(2, 5, 8, 1)
-print(l.included(2))
-print(l.included(0))
-
-
-
-
-
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()

@@ -1,38 +1,22 @@
 class BaseConverter():
 
-    def get_input(self, prompt):
-        return raw_input(prompt)
+    """
+    Accepts a string input and converts up to 10 chars of input to ascii
+    Then accepts an integer input and converts it to character
 
+    """
 
     def alphabet_codes(self, word):
-        codes = []
-        for letter in word:
-            codes.append(ord(letter) - 97)
+        codes = [ ord(letter) - 97 for letter in word ]
 
         return codes
 
+
     def reverse_codes(self, numbers):
-        codes = []
-        for digit in numbers[::-1]:
-            codes.append(chr(digit + 97))
+        codes =  [ chr(digit + 97) for digit in numbers[::-1] ]
 
         return "".join(codes)
 
-
-    def run(self):
-        message = []
-        phrase = self.get_input('Enter phrase to encode: ').lower().split(" ")
-
-        for word in phrase:
-            if len(word) > 10:
-                print("'{}' exceeds character limit and has been removed".format(word))
-            else:
-                message.append(word)
-
-        for item in message:
-            print(self.encode(item))
-
-        print(self.decode())
 
     def encode(self, item):
         result = 0
@@ -43,19 +27,35 @@ class BaseConverter():
 
 
     def decode(self):
-        num = int(self.get_input('Enter integer to decode: '))
+        num = int(input('Enter integer to decode: '))
 
         numbers = []
-        keep_going = True
+        num = 1
 
-        while keep_going:
-            result = num % 26
-            numbers.append(result)
-            num = num / 26
-            if num == 0:
-                keep_going = False
+        while num != 0:
+            numbers.append(num % 26)
+            num = num // 26
 
         return self.reverse_codes(numbers)
+
+
+    def run(self):
+        message = []
+        phrase = input('Enter phrase to encode: ')
+
+        if isinstance(phrase, str):
+            for word in phrase.lower().split(" "):
+                if len(word) > 10:
+                    print("'{}' exceeds character limit and has been removed".format(word))
+                else:
+                    message.append(word)
+
+            for item in message:
+                print(self.encode(item))
+
+            print(self.decode())
+        else:
+            print('Invalid input')
 
 
 n = BaseConverter()

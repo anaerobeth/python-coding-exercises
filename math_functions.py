@@ -135,6 +135,93 @@ def fibo_sequence(n):
     return seq
 
 
+def gcd(a, b):
+
+    """Return the greatest common denominator of a and b
+
+    Divide the larger number by the smaller
+    While there is a remainder, decrease the 1/2 of smaller by 1 and set this as divisor
+    Return the first divisor that divides both without a remainder
+
+    f(a, b) := { a if a % b == 0 else n if b/n == 0 and a/n == 0 for n in range(b//2,1,-1) }
+
+    >>> gcd(12, 16)
+    4
+    >>> gcd(115, 35)
+    5
+    """
+
+    if a > b:
+        a, b =  b, a
+
+    if a % b == 0:
+        return a
+
+    for num in range(b//2,1,-1):
+        if a % num == 0 and b % num == 0:
+            return num
+
+    return 1
+
+
+def gcd_euclid(a, b):
+
+    """Replace larger by remainder, stop when remainder is 0
+    f(a, b) := { b if a % b == 0 else repeat (a, b = b, a % b) }
+
+    >>> gcd_euclid(12, 16)
+    4
+    >>> gcd_euclid(115, 35)
+    5
+    """
+
+    while a % b != 0:
+        a, b = b, a % b
+
+    return b
+
+
+def gcd_euclid_recurse(a, b):
+
+    """Replace larger by remainder, stop when remainder is 0
+    f(a, b) := { b if a % b == 0 else f(b, a % b) }
+
+    >>> gcd_euclid_recurse(12, 16)
+    4
+    >>> gcd_euclid_recurse(115, 35)
+    5
+    """
+
+    if a % b == 0:
+        return b
+
+    return gcd_euclid_recurse(b, a % b)
+
+
+def pairs(l):
+    return list(itertools.combinations(l, 2))
+
+
+def gcd_from_list(num_list):
+
+    """Get the minimum of the gcds of all possible pairs
+
+    [2, 4, 8] -> pairs (2, 4) (2, 8) (4, 8) -> gcds [2, 2, 4] -> min is 2
+    f(l) := { min[gcd(pairs) for pair in pairs(l)] }
+
+    >>> gcd_from_list([2, 4, 8])
+    2
+    >>> gcd_from_list([50, 25, 100])
+    25
+    """
+
+    if len(num_list) == 2:
+        return gcd_euclid(*num_list)
+
+    gcds = [gcd_euclid(*pair) for pair in pairs(num_list)]
+
+    return min(gcds)
+
 
 if __name__ == "__main__":
     import doctest

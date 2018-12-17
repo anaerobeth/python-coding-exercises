@@ -28,18 +28,18 @@ class Graph:
 
 
     @property
-    def vertices(self):
+    def nodes(self):
         all_edges = [[edge.start, edge.end] for edge in self.edges]
         return [item for sublist in all_edges for item in sublist]
 
 
     @property
-    def neighbours(self):
-        neighbours = {vertex: set() for vertex in self.vertices}
+    def neighbors(self):
+        neighbors = {node: set() for node in self.nodes}
         for edge in self.edges:
-            neighbours[edge.start].add((edge.end, edge.cost))
+            neighbors[edge.start].add((edge.end, edge.cost))
 
-        return neighbours
+        return neighbors
 
 
     def dijkstra(self, source, dest):
@@ -53,31 +53,29 @@ class Graph:
         deque(['a', 'c', 'd', 'e'])
         """
 
-        distances = {vertex: inf for vertex in self.vertices}
-        previous_vertices = {
-            vertex: None for vertex in self.vertices
-        }
+        distances = {node: inf for node in self.nodes}
+        path_nodes = {node: None for node in self.nodes}
         distances[source] = 0
-        vertices = self.vertices.copy()
+        nodes = self.nodes.copy()
 
-        while vertices:
-            current_vertex = min(
-                vertices, key=lambda vertex: distances[vertex])
-            vertices.remove(current_vertex)
-            if distances[current_vertex] == inf:
+        while nodes:
+            current_node = min(
+                nodes, key=lambda node: distances[node])
+            nodes.remove(current_node)
+            if distances[current_node] == inf:
                 break
-            for neighbour, cost in self.neighbours[current_vertex]:
-                alternative_route = distances[current_vertex] + cost
-                if alternative_route < distances[neighbour]:
-                    distances[neighbour] = alternative_route
-                    previous_vertices[neighbour] = current_vertex
+            for neighbor, cost in self.neighbors[current_node]:
+                alternative_route = distances[current_node] + cost
+                if alternative_route < distances[neighbor]:
+                    distances[neighbor] = alternative_route
+                    path_nodes[neighbor] = current_node
 
-        path, current_vertex = deque(), dest
-        while previous_vertices[current_vertex] is not None:
-            path.appendleft(current_vertex)
-            current_vertex = previous_vertices[current_vertex]
+        path, current_node = deque(), dest
+        while path_nodes[current_node] is not None:
+            path.appendleft(current_node)
+            current_node = path_nodes[current_node]
         if path:
-            path.appendleft(current_vertex)
+            path.appendleft(current_node)
 
         return path
 

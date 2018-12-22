@@ -130,6 +130,22 @@ class Trie:
         self.delete_helper(key, self.root, len(key), 0)
         print(f"{key} deleted")
 
+    def count_words(self, root):
+
+        """Trace all paths to all leaf nodes
+        Count nodes with is_end_word as True
+        """
+
+        count = 0
+
+        if root.is_end_word:
+            count += 1
+
+        for i in range(26):
+            if root.children[i] != None:
+                count += self.count_words(root.children[i])
+
+        return count
 
 
 trie = Trie()
@@ -140,3 +156,5 @@ for i in range(len(keys)):
 trie.search('any')
 trie.delete('any')
 
+
+print(trie.count_words(trie.root))

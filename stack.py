@@ -52,6 +52,10 @@ class Stack():
                 last = item
         return True
 
+    def top(self):
+        if self.is_empty():
+            return None
+        return self._container[-1]
 
 if __name__ == '__main__':
     import doctest

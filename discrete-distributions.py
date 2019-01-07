@@ -286,3 +286,73 @@ if __name__ == '__main__':
     import doctest
     doctest.testmod()
 
+    # Examples from https://stattrek.com/probability-distributions
+
+    # Example exercises for Binomial Distribution:
+    # 1. What is the probability of obtaining 45 or fewer heads in 100 tosses of a coin?
+    given = Binomial(46, 100, 0.5, True)
+    assert given.prob() == 0.1843
+
+    # 2. The probability that a student is accepted to a prestigious college is 0.3.
+    # If 5 students from the same school apply, what is the probability that at most 2 are accepted?
+    given = Binomial(3, 5, 0.3, True)
+    assert given.prob() == 0.8369
+
+    # 3. What is the probability that the world series will last K games? Assume teams are evenly matched
+    # Four games: Team A or Team B wins first 4 games in a row
+    given = Binomial(4, 4, 0.5)
+    assert given.prob() == 0.0625 # Total prob is 0.125 for both teams
+    # Five games: Team A or Team B wins 3 of first 4 games then wins the 5th game
+    given = Binomial(3, 4, 0.5)
+    assert given.prob() == 0.25 # Each team has 0.5 chance to win 5th game, total prob is 0.25
+    # Six games: Team A or Team B wins 3 of first 5 games then wins the 6th game
+    given = Binomial(3, 5, 0.5)
+    assert given.prob() == 0.3125 # Each team has 0.5 chance to win 6th game, total prob is 0.3125
+    # Seven games: Team A or Team B wins 3 of first 6 games then wins the 7th game
+    given = Binomial(3, 6, 0.5)
+    assert given.prob() == 0.3125 # Each team has 0.5 chance to win 7th game, total prob is 0.3125
+
+
+    # Example exercises for Hypergeometric Distribution:
+    # 1. Select 5 cards without replacement from an ordinary deck of playing cards.
+    # What is the probability of getting exactly 2 red cards (i.e., hearts or diamonds)?
+    given = Hypergeometric(2, 52, 5, 26)  # 52 cards in a deck, 26 red cards
+    assert given.prob() == 0.3251
+
+    # 2. What is the probability of obtaining 2 or fewer hearts if we select 5 cards?
+    given = Hypergeometric(3, 52, 5, 13, True)  # 52 cards in a deck, 13 heart cards
+    assert given.prob() == 0.9072
+
+
+    # Example exercises for Multinomial Distribution:
+    # 1. What is the probability of drawing 1 spade, 1 heart, 1 diamond, and 2 clubs 
+    # if drawn randomly 5 times with replacement?
+    given = Multinomial(5, [1, 1, 1, 2], [0.25, 0.25, 0.25, 0.25])
+    assert given.distribution() == 0.0586
+
+    # 2. Four marbles were selected with replacement from 10 marbles - 2 red, 3 green, 5 blue.
+    # What is the probability of selecting 2 green marbles and 2 blue marbles?
+    given = Multinomial(4, [0, 2, 2], [0.2, 0.3, 0.5])
+    assert given.distribution() == 0.135
+
+
+    # Example exercises for Negative Binomial Distribution:
+    # 1. What is the prob that a 70% FT shooter makes his third FT on his fifth shot?
+    given = NegativeBinomial(5, 3, 0.7)
+    assert given.prob() == 0.1852
+
+    # 2. What is the prob that a 70% FT shooter makes his first FT on his fifth shot?
+    given = NegativeBinomial(5, 1, 0.7)  # geometric distribution, special case for r=1
+    assert given.prob() == 0.0057
+
+
+    # Example exercises for Poisson Distribution:
+    # 1. What is the probab that exactly 3 homes will be sold tomorrow if daily average is 2?
+    given = Poisson(3, 2)
+    assert given.prob() == 0.1804
+
+    # 2. Suppose the average number of lions seen on a 1-day safari is 5.
+    # What is the prob that tourists will see fewer than 4 lions on the next 1-day safari?
+    given = Poisson(4, 5, True)
+    assert given.prob() == 0.265
+

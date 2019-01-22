@@ -1,5 +1,6 @@
-from functools import lru_cache
-import itertools
+from functools import lru_cache, reduce
+from operator import mul
+from itertools import combinations
 
 def factorial(n):
 
@@ -23,6 +24,30 @@ def factorial(n):
     elif n == 1:
         return 1
     return n * factorial(n-1)
+
+
+def iter_factorial(num):
+
+    """Return the factorial of n
+    >>> iter_factorial(4)
+    24
+    """
+
+    result = 1
+    for n in range(num, 1, -1):
+        result *= n
+
+    return result
+
+
+def reduce_factorial(num):
+
+    """
+    >>> reduce_factorial(4)
+    24
+    """
+
+    return reduce(mul, [n for n in range(num, 1, -1)])
 
 
 def fibo(n):
@@ -199,7 +224,7 @@ def gcd_euclid_recurse(a, b):
 
 
 def pairs(l):
-    return list(itertools.combinations(l, 2))
+    return list(combinations(l, 2))
 
 
 def gcd_from_list(num_list):

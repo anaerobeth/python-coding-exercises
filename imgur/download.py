@@ -6,7 +6,7 @@ Based on https://www.toptal.com/python/beginners-guide-to-concurrency-and-parall
 import json
 import logging
 import os
-from urllib2 import urlopen, Request
+from urllib.request import urlopen, Request
 import pdb
 
 logger = logging.getLogger(__name__)
@@ -16,13 +16,13 @@ types = {'image/jpeg', 'image/png'}
 
 def get_links(client_id):
     headers = {'Authorization': 'Client-ID {}'.format(client_id)}
-    req = Request(URL, headers=headers)
+    req = Request(URL, headers=headers, method='GET')
     try:
         resp = urlopen(req)
         data = json.loads(resp.read().decode('utf-8'))
         return [item['link'] for item in data['data'] if 'type' in item and item['type'] in types]
-    except URLError, e:
-        print('Error retrieving images: {}'.format(e))
+    except:
+        print('Error retrieving images')
 
 
 def download_link(directory, link):

@@ -18,7 +18,6 @@ class DownloadWorker(Thread):
 
     def run(self):
         while True:
-            # Get the work from the queue and expand the tuple
             directory, link = self.queue.get()
             try:
                 download_link(directory, link)
@@ -32,16 +31,25 @@ def main():
     client_id = os.getenv('IMGUR_CLIENT_ID')
 
     if not client_id:
-        raise Exception("Couldn't find IMGUR_CLIENT_ID environment variable!")
+        raise Exception('Check your IMGUR_CLIENT_ID environment variable')
 
     if not os.path.isdir('images'):
         os.makedirs('images')
 
     links = get_links(client_id)
-    for link in links:
-        download_link(Path('images'), link)
 
-    logging.info('Took %s seconds', time() - ts)
+    queue = Queue()
+    for x in range(4):
+        worker = DownloadWorker(queue)
+        worker.daemon = True # let the main thread exit
+        worker.start()
+
+    for link in links:
+        logger.info('Queueing {}'.format(link))
+        queue.put((Path('images'), link))
+
+    queue.join()
+    logging.info('Took {}'.format(time() - ts))
 
 if __name__ == '__main__':
     main()

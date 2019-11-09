@@ -1,4 +1,4 @@
-# Bigram counter using Map-Reduce
+# Map-Reduce using multiprocessing
 # Adapted from https://pymotw.com/2/multiprocessing/mapreduce.html
 
 import collections
